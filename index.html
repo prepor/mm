@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>index</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Andrew Rudenko">
+	<script src="mootools.js" type="text/javascript" charset="utf-8"></script>
+	<script src="raphael.js" type="text/javascript" charset="utf-8"></script>
+	<!-- Date: 2010-01-06 -->
+</head>
+<body>
+  <script type="text/javascript" charset="utf-8">
+    var Paper = {
+      width: 600,
+      height: 400,
+      root: null,
+      canvas: null,
+      initialize: function() {
+        this.canvas = Raphael(10, 50, this.width, this.height)
+        this.initRoot()
+      },
+      initRoot: function() {
+        this.root = Root.initialize(this.width / 2, this.height / 2)
+      }
+    }
+    
+    var Root = {
+      element: null,
+      plus: null,
+      initialize: function(x, y) {
+        this.element = Paper.canvas.rect(x,y, 100, 45, 10).attr({stroke: 'gray', 'stroke-width': '2'})
+        this.plus = new Plus(this)
+        this.element.node.addEvent('mouseover', this.over)
+        return this
+      },
+      
+      over: function(ev) {
+        
+      }
+    }
+    
+    var Plus = new Class({
+      element: null,
+      initialize: function(node) {
+        var dom_node = node.element.node
+        this.x = parseInt(dom_node.get('x')) + parseInt(dom_node.get('width')) + 15
+        this.y = parseInt(dom_node.get('y')) + (parseInt(dom_node.get('height')) / 2) 
+        this.element = Paper.canvas.set()
+        this.element.push(Paper.canvas.circle(this.x, this.y, 10).attr({'stroke': 'gray', 'stroke-width': '2'}))
+        var path = "M"+(this.x - 6)+','+this.y+'L'+(this.x + 6)+','+this.y+'M'+this.x+','+(this.y - 6)+'L'+this.x+','+(this.y + 6)
+        this.element.push(Paper.canvas.path(path).attr({'stroke': 'gray', 'stroke-width': '2'}));
+      }
+    })
+    // var paper = Raphael(10, 50, 600, 400);
+    // paper.rect(10,10, 100, 45, 10).attr({stroke: 'gray', 'stroke-width': '2'})
+    // paper.circle(10, 10, 10).attr({'stroke': 'gray', 'stroke-width': '2'});
+    // paper.path("M4,10L16,10M10,4L10,16").attr({'stroke': 'gray', 'stroke-width': '2'});
+    // paper.path("M50,400S100,50 200,50").attr({'stroke': '#ffd478', 'stroke-width': '5'})
+    // Paper.initialize()
+  </script>
+  <svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">
+    <circle cx="150" cy="100" r="50" />
+  </svg>
+</body>
+</html>
